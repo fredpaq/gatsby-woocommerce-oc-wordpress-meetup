@@ -3,7 +3,7 @@ import { Box, Heading, SimpleGrid } from '@chakra-ui/react'
 import { graphql, PageProps } from 'gatsby'
 
 // Internal dependencies
-import AddToCart from '../components/addToCart'
+import AddToCart from '../components/AddToCart'
 import Layout from '../components/Layout'
 
 const Product: React.FC<ProductProps> = ({ data }) => {

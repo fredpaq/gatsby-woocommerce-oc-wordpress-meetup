@@ -12,7 +12,7 @@ import {
 
 
 //const url = 'http://localhost/wordpress3/graphql'
-const url = 'http://teshrd.tk/graphql'  
+const url = 'https://teshrd.tk/graphql'  
 
 const httpLink = new HttpLink({   
   fetchOptions: fetchiso,
