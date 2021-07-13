@@ -7,6 +7,7 @@ import AddToCart from '../components/addToCart'
 import Layout from '../components/Layout'
 
 const Product: React.FC<ProductProps> = ({ data }) => {
+ 
   const {
     wp: {
       product: { name, databaseId, shortDescription },
@@ -20,12 +21,6 @@ const Product: React.FC<ProductProps> = ({ data }) => {
           <Heading as="h1" mb={4}>
             {name}
           </Heading>
-          {shortDescription && (
-            <Box
-              mb={10}
-              dangerouslySetInnerHTML={{ __html: shortDescription }}
-            />
-          )}
           <AddToCart productId={databaseId} />
         </Box>
       </SimpleGrid>

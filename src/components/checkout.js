@@ -5,20 +5,20 @@ import { Source } from '@stripe/stripe-js'
 import { navigate } from 'gatsby'
 import { Button, toast, useToast } from '@chakra-ui/react'
 import { useAppState } from './context'
-import { Order } from '../../types/Order'
 
-const CheckoutForm: React.FC = ({}) => {
+
+function CheckoutForm () {
   const toast = useToast()
   const [formState, setFormState] = useState('IDLE')
   const { setCart } = useAppState()
   const stripe = useStripe()
   const elements = useElements()
 
-  const [checkout] = useMutation<{
-    checkout: { order: Order }
-  }>(CHECKOUT, {
+  const [checkout] = useMutation(CHECKOUT, {
     onCompleted({ checkout }) {
+      console.log(  checkout)
       handleSuccessfulCheckout({ order: checkout.order })
+      console.log(  formState)
     },
     onError(error) {
       toast({
@@ -28,50 +28,47 @@ const CheckoutForm: React.FC = ({}) => {
       })
       console.error(error)
       setFormState('ERROR')
+      console.log(  formState)
     },
   })
 
-  const handleSubmit = async (event: React.FormEvent) => {
+  const handleSubmit = async (event) => {
     event.preventDefault()
     setFormState('LOADING')
-    try {
-      const source = (await handleStripe()) as Source
+    const source = (await handleStripe())   
+    const  Source = source
+    console.log(Source.id)   
 
       await checkout({
         variables: {
           input: {
-            clientMutationId: '12345',
+            clientMutationId: '121',
             paymentMethod: 'stripe',
-            shippingMethod: 'Flat rate',
-            billing: {
-              firstName: 'George',
-              lastName: 'Costanza',
-              address1: `129 West 81st Street, Apartment 5A`,
-              city: `New York`,
-              state: `NY`,
-              postcode: `12345`,
-              email: `george@vandaleyindustries.com`,
+            shipping:{
+              address1: `2 rue du bois`,
+              city:`Lyon`,
+              email: `john@test.fr`,
+              phone:`0984578963`
+            },
+            billing: {   
+              firstName: 'john',
+              address1: `2 rue du bois`,
+              city: `Lyon`,
+              postcode: `69001`,
             },
             metaData: [
               {
                 key: `_stripe_source_id`,
-                value: source.id,
+                value: Source.id,
               },
             ],
           },
         },
       })
-    } catch (error) {
-      toast({
-        title: 'Error',
-        description: 'There was an error with your checkout',
-        status: 'error',
-      })
-      console.error(error)
-    }
+ 
   }
 
-  async function handleStripe(): Promise<Source | Error> {
+  async function handleStripe(){
     if (!stripe || !elements) {
       throw Error(`stripe or elements undefined`)
     }
@@ -96,7 +93,7 @@ const CheckoutForm: React.FC = ({}) => {
     return source
   }
 
-  function handleSuccessfulCheckout({ order }: { order: Order }): void {
+  function handleSuccessfulCheckout({ order }){
     setFormState('IDLE')
     localStorage.removeItem('woo-session')
     setCart(undefined)
@@ -122,7 +119,6 @@ const CheckoutForm: React.FC = ({}) => {
     </form>
   )
 }
-
 const CHECKOUT = gql`
   mutation Checkout($input: CheckoutInput!) {
     checkout(input: $input) {
@@ -142,5 +138,23 @@ const CHECKOUT = gql`
     }
   }
 `
-
+// const CHECKOUT = gql`
+// mutation CreateOrder($input: CreateOrderInput!) {
+//       createOrder(input: $input) {
+//         order {
+//           databaseId
+//           orderNumber
+//           total
+//           lineItems {
+//             nodes {
+//               product {
+//                 name
+//                 databaseId
+//               }
+//             }   
+//           }
+//         }
+//       }
+//     }
+// `
 export default CheckoutForm

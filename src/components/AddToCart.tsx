@@ -5,7 +5,7 @@ import { useAppState } from './context'
 
 const AddToCart: React.FC<{ productId: number }> = ({ productId }) => {
   const toast = useToast()
-  const { setCart } = useAppState()
+  const { cart, setCart } = useAppState()
   const [addToCart, { loading }] = useMutation(ADD_TO_CART, {
     onCompleted: ({ addToCart }) => {
       toast({
@@ -13,6 +13,7 @@ const AddToCart: React.FC<{ productId: number }> = ({ productId }) => {
         status: 'success',
       })
       setCart(addToCart.cart)
+      console.log(cart)
     },
     onError: () => {
       toast({

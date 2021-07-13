@@ -1,17 +1,22 @@
-import fetch from 'cross-fetch'
+//import fetch from 'cross-fetch'
+import {fetch as fetchiso} from 'isomorphic-fetch'
+
 import {
   ApolloClient,
   InMemoryCache,
   HttpLink,
   ApolloLink,
-  from,
+  from
 } from '@apollo/client'
 
-const url = process.env.GATSBY_API_URL
 
-const httpLink = new HttpLink({
+//const url = 'http://localhost/wordpress3/graphql'
+const url = 'http://genere.atwebpages.com/graphql'  
+
+
+const httpLink = new HttpLink({   
+  fetchOptions: fetchiso,
   uri: url,
-  fetch,
 })
 
 /**
@@ -91,3 +96,4 @@ export const client = new ApolloClient({
   }),
   link: from([wooSessionMiddleware, wooSessionAfterware, httpLink]),
 })
+

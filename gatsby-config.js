@@ -40,7 +40,7 @@ module.exports = {
     {
       resolve: `gatsby-source-graphql`,
       options: {
-        url: process.env.GATSBY_API_URL,
+        url: `http://teshrd.tk/graphql`,
         typeName: `WORDPRESS`,
         fieldName: `wp`,
       },

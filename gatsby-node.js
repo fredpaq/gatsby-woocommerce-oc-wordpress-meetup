@@ -2,7 +2,7 @@ exports.createPages = async function ({ actions, graphql, reporter }) {
   const { data } = await graphql(`
     query {
       wp {
-        products(first: 3) {
+       produit:  products(first: 1000) {
           nodes {
             slug
           }
@@ -11,12 +11,12 @@ exports.createPages = async function ({ actions, graphql, reporter }) {
     }
   `)
 
-  if (!data || !data.wp || !data.wp.products) {
+  if (!data || !data.wp || !data.wp.produit) {
     reporter.panic('Error creating pages')
     return
   }
 
-  const products = data.wp.products.nodes || []
+  const products = data.wp.produit.nodes || []
 
   if (products.length === 0) {
     reporter.info('No products return during page creation process.')

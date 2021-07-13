@@ -11,6 +11,7 @@ const Cart: React.FC = () => {
   const [maybeGetCart, { loading }] = useLazyQuery<CartQuery>(CART, {
     onCompleted: ({ cart }) => {
       setCart(cart)
+      console.log(cart)
     },
   })
 
@@ -140,21 +141,21 @@ const REMOVE = gql`
 const CART = gql`
   query Cart {
     cart {
+      shippingTotal
       subtotal
       total
-      shippingTotal
       contents {
         itemCount
         nodes {
           quantity
-          key
           product {
             node {
+              databaseId
               name
               sku
-              databaseId
               ... on SimpleProduct {
-                price
+                id
+                name
               }
             }
           }
@@ -162,6 +163,7 @@ const CART = gql`
       }
     }
   }
+  
 `
 
 export default Cart

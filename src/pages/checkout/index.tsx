@@ -3,17 +3,17 @@ import { Elements } from '@stripe/react-stripe-js'
 import { loadStripe } from '@stripe/stripe-js'
 import Layout from '../../components/Layout'
 import { Heading } from '@chakra-ui/react'
-import CheckoutForm from '../../components/CheckoutForm'
+import CheckoutForm  from '../../components/checkout.js'
 
 const stripePromise = loadStripe(
-  process.env.GATSBY_STRIPE_KEY
+ `pk_test_51H9EI1GIk06rLptrvciiWdPj949WssBJG4qzq1cU8F8ItPahbvH7yxiWwLMdSUxLv9Wme2uRcpy1kFJ6SsWF42jS00G5JWlwQx`
 )
 
-const Checkout: React.FC = () => {
+const Checkout: React.FC = () => {   
   return (
     <Layout>
       <Heading as="h1" mb={6}>
-        Checkout
+        Checkout   
       </Heading>
       <Elements stripe={stripePromise}>
         <CheckoutForm />
