@@ -7,7 +7,7 @@ import { Order } from '../../../types/Order'
 const OrderReceived: React.FC<PageProps> = ({ location }) => {
   const order = location.state as Order
 
-  const { orderNumber, total, lineItems } = order
+  const { orderNumber, total, lineItems } = order || {}
 
   return (
     <Layout>
@@ -23,7 +23,7 @@ const OrderReceived: React.FC<PageProps> = ({ location }) => {
       <Heading as="h2" size="md" mt={10}>
         What you bought
       </Heading>
-      {lineItems.nodes.map(({ product }) => {
+      {lineItems?.nodes.map(({ product }) => {
         return <Box key={product.databaseId}>{product.name}</Box>
       })}
     </Layout>

@@ -2,7 +2,7 @@ exports.createPages = async function ({ actions, graphql, reporter }) {
   const { data } = await graphql(`
     query {
       wp {
-       produit:  products(first: 1000) {
+       produit:  products(first: 10) {
           nodes {
             slug
           }

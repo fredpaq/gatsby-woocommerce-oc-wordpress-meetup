@@ -10,8 +10,8 @@ import {
 } from '@apollo/client'
 
 
-//const url = 'http://localhost/wordpress3/graphql'
-const url = 'http://genere.atwebpages.com/graphql'  
+const url = 'http://localhost/wordpress3/graphql'
+//const url = 'http://teshrd.tk/graphql'  
 
 
 const httpLink = new HttpLink({   

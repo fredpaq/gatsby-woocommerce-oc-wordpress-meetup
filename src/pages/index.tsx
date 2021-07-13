@@ -33,7 +33,7 @@ type IndexProps = PageProps & {
 export const query = graphql`
   query AllProducts {
     wp {
-      products(first: 3) {
+      products(first: 10) {
         nodes {
           name
           id
